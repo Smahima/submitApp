@@ -47,20 +47,22 @@ class ParentComponent extends Component {
 
     //we are really in a *bind* here.... :)
     //fix it...
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     //state lives here
     this.state = {
       whatToSay: "",
-      whatWasSaid: "",
-    };
-    this.handleInput = this.state.handleInput.bind(this);
-    this.handleSubmit = this.state.handleSubmit.bind(this);
+      whatWasSaid: ""
+    }
   }
   handleInput(e) {
     e.preventDefault();
+    console.log(e.target.value);
     //set the state on input change
-    this.setState({whatToSay: this.state.whatToSay});
+    this.setState({whatToSay: e.target.value});
   }
+
   handleSubmit(e) {
     e.preventDefault();
     //check console to see if firing
@@ -74,21 +76,19 @@ class ParentComponent extends Component {
   render() {
     return (
       // Smart Component: I have a function, but something isn't working? I also need to pass that function to the ChildComponent.
-      <div className="activity">
+      <div className="message">
       <form>
-
         <div className="form-group">
-        <input onChange={this.state.handleInput} type="text" placeholder="Say It, Don't Spray It!" />
+        <input onChange={this.handleInput} type="text" className="form-control" placeholder="Say It, Don't Spray It!" />
         </div>
 
         <div>
-          <ChildComponent onClick={this.state.handleSubmit}/>
+          <ChildComponent handleSubmit={this.handleSubmit}/>
         </div>
 
         <div>
-          <DisplayComponent sayWhat={this.state.whatWasSaid} />
+          <DisplayComponent whatWasSaid={this.state.whatWasSaid}/>
         </div>
-
       </form>
 
       </div>
@@ -110,8 +110,7 @@ class ChildComponent extends Component {
 class DisplayComponent extends Component {
   render() {
     return (
-      <div>
-      <output> type="text" {this.props.sayWhat}</output></div>
+      <div>{this.props.whatWasSaid}</div>
     );
   }
 }
