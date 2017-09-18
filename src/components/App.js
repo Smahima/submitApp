@@ -110,7 +110,11 @@ class ChildComponent extends Component {
 class DisplayComponent extends Component {
   render() {
     return (
-      <div>{this.props.whatWasSaid}</div>
+      <div className="card-block">
+        <h3 className="card-title">Messages</h3>
+        <h4 className="card-subtitle mb-2 text-muted">whatWasSaid={this.props.whatWasSaid}</h4>
+      </div>
+
     );
   }
 }
